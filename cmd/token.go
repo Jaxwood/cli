@@ -45,10 +45,10 @@ var tokenCmd = &cobra.Command{
 		tenant := viper.GetString("tenant")
 
 		var oauth OAuth
-		if env == "dev" {
-			oauth = config.Dev
-		} else {
+		if env == "prd" {
 			oauth = config.Prd
+		} else {
+			oauth = config.Dev
 		}
 		// request token
 		data := url.Values{}
