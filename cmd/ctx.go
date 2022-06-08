@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"bytes"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -26,8 +27,27 @@ var ctxCmd = &cobra.Command{
 		viper.UnmarshalKey(env, &config)
 		fmt.Println("Setting environment to: " + env)
 
-		exec.Command("az", "account", "set", "-n", config.SubscriptionId).Start()
-		exec.Command("az", "aks", "get-credentials", "-n", config.ClusterName, "-g", config.ResourceGroup, "--overwrite-existing", "--context", env).Start()
+		// set the account
+		accountCmd := exec.Command("az", "account", "set", "-n", config.SubscriptionId)
+		var accountStd, accountErr bytes.Buffer
+		accountCmd.Stdout = &accountStd
+		accountCmd.Stderr = &accountErr
+		err := accountCmd.Run()
+		if err != nil {
+			   fmt.Println(err)
+		    }
+		fmt.Println("out:", accountStd.String(), "err:", accountErr.String())
+
+		// update kube config
+		kubeCmd := exec.Command("az", "aks", "get-credentials", "-n", config.ClusterName, "-g", config.ResourceGroup, "--overwrite-existing", "--context", env)
+		var kubeStd, kubeErr bytes.Buffer
+		kubeCmd.Stdout = &kubeStd
+		kubeCmd.Stderr = &kubeErr
+		err = kubeCmd.Run()
+		if err != nil {
+			   fmt.Println(err)
+		    }
+		fmt.Println("out:", kubeStd.String(), "err:", kubeErr.String())
 	},
 }
 
