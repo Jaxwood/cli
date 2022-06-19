@@ -1,8 +1,9 @@
 package cmd
 
 import (
-	"fmt"
 	"bytes"
+	"fmt"
+
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
@@ -12,6 +13,7 @@ import (
 type Confluent struct {
 	Dev State `mapstructure:"dev"`
 	Tst State `mapstructure:"tst"`
+	Reg State `mapstructure:"reg"`
 	Prd State `mapstructure:"prd"`
 }
 
@@ -38,6 +40,8 @@ var confluentCmd = &cobra.Command{
 			state = config.Prd
 		} else if env == "tst" {
 			state = config.Tst
+		} else if env == "reg" {
+			state = config.Reg
 		} else {
 			state = config.Dev
 		}
