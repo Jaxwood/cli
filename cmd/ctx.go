@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"fmt"
 	"bytes"
+	"fmt"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -25,7 +25,7 @@ var ctxCmd = &cobra.Command{
 		env, _ := cmd.Flags().GetString("env")
 		var config Azure
 		viper.UnmarshalKey(env, &config)
-		fmt.Println("Setting environment to: " + env)
+		fmt.Println("Setting environment to " + env + "..")
 
 		// set the account
 		accountCmd := exec.Command("az", "account", "set", "-n", config.SubscriptionId)
@@ -36,9 +36,12 @@ var ctxCmd = &cobra.Command{
 		if err != nil {
 			   fmt.Println(err)
 		    }
-		fmt.Println("out:", accountStd.String(), "err:", accountErr.String())
+		if accountStd.Len() > 0 || accountErr.Len() > 0 {
+			fmt.Println("out:", accountStd.String(), "err:",  accountErr.String())
+		}
 
 		// update kube config
+		fmt.Println("Updating kubeconfig..")
 		kubeCmd := exec.Command("az", "aks", "get-credentials", "-n", config.ClusterName, "-g", config.ResourceGroup, "--overwrite-existing", "--context", env)
 		var kubeStd, kubeErr bytes.Buffer
 		kubeCmd.Stdout = &kubeStd
@@ -47,7 +50,37 @@ var ctxCmd = &cobra.Command{
 		if err != nil {
 			   fmt.Println(err)
 		    }
-		fmt.Println("out:", kubeStd.String(), "err:", kubeErr.String())
+		if kubeStd.Len() > 0 || kubeErr.Len() > 0 {
+			fmt.Println("out:", kubeStd.String(), "err:", kubeErr.String())
+		}
+
+		// remove kubelogin tokens
+		fmt.Println("Removing kubelogin tokens..")
+		kubetokenCmd := exec.Command("kubelogin", "remove-tokens")
+		var kubetokenStd, kubetokenErr bytes.Buffer
+		kubetokenCmd.Stdout = &kubetokenStd
+		kubetokenCmd.Stderr = &kubetokenErr
+		err = kubetokenCmd.Run()
+		if err != nil {
+			   fmt.Println(err)
+		    }
+		if kubetokenStd.Len() > 0 || kubetokenErr.Len() > 0 {
+			fmt.Println("out:", kubetokenStd.String(), "err:", kubetokenErr.String())
+		}
+
+		// run kubelogin
+		fmt.Println("Running kubelogin..")
+		kubeloginCmd := exec.Command("kubelogin", "convert-kubeconfig", "-l", "azurecli")
+		var kubeloginStd, kubeloginErr bytes.Buffer
+		kubeloginCmd.Stdout = &kubeloginStd
+		kubeloginCmd.Stderr = &kubeloginErr
+		err = kubeloginCmd.Run()
+		if err != nil {
+			   fmt.Println(err)
+		    }
+		if kubeloginStd.Len() > 0 || kubeloginErr.Len() > 0 {
+			fmt.Println("out:", kubeloginStd.String(), "err:", kubeloginErr.String())
+		}
 	},
 }
 
