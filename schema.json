@@ -1,0 +1,208 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "$ref": "#/definitions/Schema",
+    "definitions": {
+        "Schema": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "tenant": {
+                    "type": "string"
+                },
+                "project": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "sbx": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "dev-infra": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "dev": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "tst-infra": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "tst": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "prd": {
+                    "$ref": "#/definitions/Subscription"
+                },
+                "customersegmentation": {
+                    "type": "object",
+                    "additionalProperties": {
+                        "$ref": "#/definitions/Customersegmentation"
+                    }
+                },
+                "confluent": {
+                    "$ref": "#/definitions/Confluent"
+                },
+                "sysdig": {
+                    "$ref": "#/definitions/Sysdig"
+                },
+                "jfrog": {
+                    "$ref": "#/definitions/Jfrog"
+                }
+            },
+            "required": [
+                "confluent",
+                "customersegmentation",
+                "dev",
+                "dev-infra",
+                "jfrog",
+                "prd",
+                "project",
+                "sbx",
+                "sysdig",
+                "tenant",
+                "token",
+                "tst",
+                "tst-infra"
+            ],
+            "title": "Welcome7"
+        },
+        "Confluent": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "dev": {
+                    "$ref": "#/definitions/RegClass"
+                },
+                "tst": {
+                    "$ref": "#/definitions/RegClass"
+                },
+                "reg": {
+                    "$ref": "#/definitions/RegClass"
+                },
+                "prd": {
+                    "$ref": "#/definitions/RegClass"
+                }
+            },
+            "required": [
+                "dev",
+                "prd",
+                "reg",
+                "tst"
+            ],
+            "title": "Confluent"
+        },
+        "RegClass": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "resource_group_name": {
+                    "type": "string"
+                },
+                "storage_account_name": {
+                    "type": "string"
+                },
+                "container_name": {
+                    "type": "string"
+                },
+                "key": {
+                    "type": "string"
+                },
+                "access_key": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "access_key",
+                "container_name",
+                "key",
+                "resource_group_name",
+                "storage_account_name"
+            ],
+            "title": "RegClass"
+        },
+        "Customersegmentation": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "scope": {
+                    "type": "string"
+                },
+                "client_id": {
+                    "type": "string"
+                },
+                "client_secret": {
+                    "type": "string"
+                },
+                "grant_type": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "client_id",
+                "client_secret",
+                "grant_type",
+                "scope"
+            ],
+            "title": "Customersegmentation"
+        },
+        "Subscription": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "subscription_id": {
+                    "type": "string"
+                },
+                "resource_group": {
+                    "type": "string"
+                },
+                "cluster_name": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "cluster_name",
+                "resource_group",
+                "subscription_id"
+            ],
+            "title": "Subscription"
+        },
+        "Jfrog": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "username": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "token",
+                "username"
+            ],
+            "title": "Jfrog"
+        },
+        "Sysdig": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+                "image": {
+                    "type": "string"
+                },
+                "token": {
+                    "type": "string"
+                },
+                "url": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "image",
+                "token",
+                "url"
+            ],
+            "title": "Sysdig"
+        }
+    }
+}
