@@ -96,7 +96,7 @@ var prCmd = &cobra.Command{
 		branchName := getBranchname()
 		repository := getRepository(token, project)
 
-		url := "https://dev.azure.com/VELUX-IT-Dev/VELUX%20CCoE/_git/" + repository.Name + "/pullrequestcreate?sourceRef=" + branchName + "&targetRef=main&sourceRepositoryId=" + repository.Id + "&targetRepositoryId=" + repository.Id
+		url := "https://dev.azure.com/" + project "/_git/" + repository.Name + "/pullrequestcreate?sourceRef=" + branchName + "&targetRef=main&sourceRepositoryId=" + repository.Id + "&targetRepositoryId=" + repository.Id
 		exec.Command("open", url).Start()
 	},
 }
