@@ -71,16 +71,16 @@
             "additionalProperties": false,
             "properties": {
                 "dev": {
-                    "$ref": "#/definitions/RegClass"
+                    "$ref": "#/definitions/RemoteState"
                 },
                 "tst": {
-                    "$ref": "#/definitions/RegClass"
+                    "$ref": "#/definitions/RemoteState"
                 },
                 "reg": {
-                    "$ref": "#/definitions/RegClass"
+                    "$ref": "#/definitions/RemoteState"
                 },
                 "prd": {
-                    "$ref": "#/definitions/RegClass"
+                    "$ref": "#/definitions/RemoteState"
                 }
             },
             "required": [
@@ -91,7 +91,7 @@
             ],
             "title": "Confluent"
         },
-        "RegClass": {
+        "RemoteState": {
             "type": "object",
             "additionalProperties": false,
             "properties": {
@@ -118,7 +118,7 @@
                 "resource_group_name",
                 "storage_account_name"
             ],
-            "title": "RegClass"
+            "title": "RemoteState"
         },
         "Customersegmentation": {
             "type": "object",
