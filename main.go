@@ -7,5 +7,5 @@ package main
 import "github.com/jaxwood/cli/cmd"
 
 func main() {
-	cmd.Execute()
+  cmd.Execute()
 }
