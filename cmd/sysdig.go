@@ -36,7 +36,7 @@ var sysdigCmd = &cobra.Command{
 		viper.UnmarshalKey("jfrog", &jfrogConfig)
 
 		// scan image
-		dockerCmd := exec.Command("nerdctl", "run", sysdigConfig.Image, "-k", sysdigConfig.Token, "-s", sysdigConfig.Url, "--registry-auth-basic", jfrogConfig.Username+":"+jfrogConfig.Token, image)
+		dockerCmd := exec.Command("docker", "run", sysdigConfig.Image, "-k", sysdigConfig.Token, "-s", sysdigConfig.Url, "--registry-auth-basic", jfrogConfig.Username+":"+jfrogConfig.Token, image)
 
 		var dockerStd, dockerStdErr bytes.Buffer
 		dockerCmd.Stdout = &dockerStd
