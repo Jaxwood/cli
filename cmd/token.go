@@ -36,7 +36,7 @@ type OAuth struct {
 var tokenCmd = &cobra.Command{
   Use:   "token",
   Short: "Get an access token for application",
-  Long: `Gets an access token for either development or production environment`,
+  Long: "usage: cli token -e <env>",
   Run: func(cmd *cobra.Command, args []string) {
     // read config
     env, _ := cmd.Flags().GetString("env")

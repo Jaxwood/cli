@@ -56,7 +56,7 @@ func requestResource(client *http.Client, token string, url string) []byte {
 var pipelineCmd = &cobra.Command{
   Use:   "pipeline",
   Short: "get latest build by name",
-  Long:  ``,
+  Long:  "usage: cli pipeline --name <azure-devops-pipeline-name>",
   Run: func(cmd *cobra.Command, args []string) {
     name, _ := cmd.Flags().GetString("name")
     project := viper.GetString("project")

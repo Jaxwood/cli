@@ -29,7 +29,7 @@ type State struct {
 var confluentCmd = &cobra.Command{
   Use:   "confluent",
   Short: "use to run terraform init for a given environment",
-  Long: `supported environments: dev, tst and prd`,
+  Long: "usage: cli -e <env>",
   Run: func(cmd *cobra.Command, args []string) {
     env, _ := cmd.Flags().GetString("env")
     var config Confluent

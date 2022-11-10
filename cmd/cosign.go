@@ -21,7 +21,7 @@ type Cosign struct {
 var cosignCmd = &cobra.Command{
   Use:   "cosign",
   Short: "sign an image using cosign cli",
-  Long:  "",
+  Long:  "usage: cli cosign --image org.jfrog.io/docker/sub-folder-image-name:tag",
   Run: func(cmd *cobra.Command, args []string) {
     fmt.Println("cosign called")
     image, _ := cmd.Flags().GetString("image")

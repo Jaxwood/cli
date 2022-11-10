@@ -20,7 +20,7 @@ type Azure struct {
 var ctxCmd = &cobra.Command{
   Use:   "ctx",
   Short: "Sets the Azure context",
-  Long:  `Sets the Azure context using the env flag to specify the environment.`,
+  Long:  "usage: cli ctx -e <env>",
   Run: func(cmd *cobra.Command, args []string) {
     env, _ := cmd.Flags().GetString("env")
     var config Azure

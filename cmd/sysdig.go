@@ -24,7 +24,7 @@ type Jfrog struct {
 var sysdigCmd = &cobra.Command{
   Use:   "sysdig",
   Short: "scan an image using sysdig inline scanner",
-  Long:  "",
+  Long:  "usage: cli sysdig --image <org.jfrog.io/docker/image-name>:<tag>",
   Run: func(cmd *cobra.Command, args []string) {
     fmt.Println("sysdig called")
     image, _ := cmd.Flags().GetString("image")

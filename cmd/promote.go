@@ -46,7 +46,7 @@ func postResource(client *http.Client, token string, url string, image string, t
 var promoteCmd = &cobra.Command{
   Use:   "promote",
   Short: "promote an Docker image",
-  Long:  ``,
+  Long:  "usage: cli promote --image <sub-folder/image-name> --tag <tag>",
   Run: func(cmd *cobra.Command, args []string) {
     promoteBuildName := viper.GetString("promoteBuildName")
 
