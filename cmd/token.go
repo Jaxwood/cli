@@ -1,16 +1,16 @@
 package cmd
 
 import (
-  "fmt"
-  "io/ioutil"
-  "net/http"
-  "net/url"
-  "encoding/json"
+	"encoding/json"
+	"fmt"
+	"io/ioutil"
+	"net/http"
+	"net/url"
 
-  "github.com/spf13/cobra"
-  "github.com/spf13/viper"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
-  "strings"
+	"strings"
 )
 
 type Token struct {
@@ -20,8 +20,9 @@ type Token struct {
   TokenType    string `json:"token_type"`
 }
 
-type CustomerSegmentation struct {
+type Application struct {
   Dev OAuth `mapstructure:"dev"`
+  Tst OAuth `mapstructure:"tst"`
   Prd OAuth `mapstructure:"prd"`
 }
 
@@ -36,12 +37,18 @@ type OAuth struct {
 var tokenCmd = &cobra.Command{
   Use:   "token",
   Short: "Get an access token for application",
-  Long: "usage: cli token -e <env>",
+  Long: "usage: cli token -e <env> -a <app>",
   Run: func(cmd *cobra.Command, args []string) {
     // read config
     env, _ := cmd.Flags().GetString("env")
-    var config CustomerSegmentation
-    viper.UnmarshalKey("customersegmentation", &config)
+    app, _ := cmd.Flags().GetString("app")
+    var config Application
+    if app == "customer" {
+      viper.UnmarshalKey("customersegmentation", &config)
+    }
+    if app == "asset" {
+      viper.UnmarshalKey("assetsync", &config)
+    }
     tenant := viper.GetString("tenant")
 
     var oauth OAuth
@@ -78,6 +85,9 @@ func init() {
 
   tokenCmd.PersistentFlags().StringP("env", "e", "", "Env is required. Supported values dev|tst|prd")
   tokenCmd.MarkPersistentFlagRequired("env")
+
+  tokenCmd.PersistentFlags().StringP("app", "a", "", "Application is required. Supported values customer|asset")
+  tokenCmd.MarkPersistentFlagRequired("app")
 
   // Here you will define your flags and configuration settings.
 
