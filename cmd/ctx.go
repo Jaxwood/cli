@@ -1,15 +1,15 @@
 package cmd
 
 import (
-  "bytes"
-  "fmt"
+	"bytes"
+	"fmt"
 
-  "github.com/spf13/cobra"
-  "github.com/spf13/viper"
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
-  "os/exec"
+	"os/exec"
 
-  "github.com/jaxwood/cli/internal/util"
+	"github.com/jaxwood/cli/internal/types"
 )
 
 type Azure struct {
@@ -25,10 +25,9 @@ var ctxCmd = &cobra.Command{
   Long:  "usage: cli ctx -e <env>",
   Run: func(cmd *cobra.Command, args []string) {
     env, _ := cmd.Flags().GetString("env")
-    var config Azure
+    var config types.Azure
     viper.UnmarshalKey(env, &config)
     fmt.Println("Setting environment to " + env + "..")
-    util.Foo();
 
     // set the account
     accountCmd := exec.Command("az", "account", "set", "-n", config.SubscriptionId)
