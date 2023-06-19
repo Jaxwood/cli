@@ -8,6 +8,8 @@ import (
   "github.com/spf13/viper"
 
   "os/exec"
+
+  "github.com/jaxwood/cli/internal/util"
 )
 
 type Azure struct {
@@ -26,6 +28,7 @@ var ctxCmd = &cobra.Command{
     var config Azure
     viper.UnmarshalKey(env, &config)
     fmt.Println("Setting environment to " + env + "..")
+    util.Foo();
 
     // set the account
     accountCmd := exec.Command("az", "account", "set", "-n", config.SubscriptionId)
